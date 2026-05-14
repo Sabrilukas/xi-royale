@@ -16,245 +16,513 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app-shell" data-current-view="home">
 
     <header class="app-header">
       <div class="brand">
-        <span class="brand-kicker">World Cup Fantasy</span>
+        <span class="brand-kicker" data-i18n="brandKicker">World Cup Fantasy</span>
         <h1>XI Royale</h1>
       </div>
 
-      <div class="balance-pill">
-        <span>Bakiye</span>
-        <strong id="balanceValue">$1,000,000</strong>
+      <div class="header-actions">
+        <div class="balance-pill">
+          <span data-i18n="balance">Bakiye</span>
+          <strong id="balanceValue">$1,000,000</strong>
+        </div>
+
+        <div class="language-switcher" role="group" aria-label="Language">
+          <button class="language-button is-active" type="button" data-language="tr">TR</button>
+          <button class="language-button" type="button" data-language="en">EN</button>
+        </div>
       </div>
     </header>
 
     <main class="page-content">
 
-      <section class="hero-card">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
+      <section class="view view-home is-active" data-view="home">
+        <section class="hero-card">
+          <div class="hero-bg"></div>
+          <div class="hero-overlay"></div>
 
-        <div class="hero-content">
-          <span class="promo-badge">Turnuva Oyunu</span>
-          <h2>Kadronu Kur,<span>Zirveye Oyna</span></h2>
+          <div class="hero-content">
+            <span class="promo-badge" data-i18n="promoBadge">Turnuva Oyunu</span>
+            <h2 data-i18n-html="homeHeroTitleHtml">Kadronu Kur,<span>Zirveye Oyna</span></h2>
 
-          <p>
-            Dünya Kupası yıldızlarını sanal bütçenle seç.
-            Rating puanlarıyla leaderboard’da yüksel.
-          </p>
+            <p data-i18n="homeHeroCopy">
+              Dünya Kupası yıldızlarını sanal bütçenle seç.
+              Rating puanlarıyla leaderboard'da yüksel.
+            </p>
 
-          <div class="hero-meta">
-            <div class="jackpot-box">
-              <span>Jackpot Hedefi</span>
-              <strong>50,000 Puan</strong>
+            <div class="hero-meta">
+              <div class="jackpot-box">
+                <span data-i18n="jackpotTarget">Jackpot Hedefi</span>
+                <strong data-i18n="jackpotValue">50,000 Puan</strong>
+              </div>
+
+              <div class="rating-box">
+                <span data-i18n="avgLabel">AVG</span>
+                <strong>8.7</strong>
+              </div>
             </div>
 
-            <div class="rating-box">
-              <span>AVG</span>
-              <strong>8.7</strong>
-            </div>
+            <button class="primary-button" type="button" id="buildTeamButton" data-i18n="buildTeam">
+              Kadromu Kur
+            </button>
+
+            <p class="action-feedback" id="actionFeedback"></p>
           </div>
-
-          <button class="primary-button" type="button" id="buildTeamButton">
-            Kadromu Kur
-          </button>
-
-          <p class="action-feedback" id="actionFeedback">
-            Kadro kurma ekranına geçmek için butona bas.
-          </p>
-        </div>
-      </section>
-
-      <section class="quick-stats">
-        <article class="stat-card">
-          <span>Kadro</span>
-          <strong id="squadCount">0 / 16</strong>
-        </article>
-
-        <article class="stat-card">
-          <span>Minimum</span>
-          <strong id="minimumPlayers">6 Oyuncu</strong>
-        </article>
-
-        <article class="stat-card">
-          <span>Transfer</span>
-          <strong id="transferStatus">Açık</strong>
-        </article>
-
-        <article class="stat-card">
-          <span>Puan</span>
-          <strong id="totalPoints">0</strong>
-        </article>
-      </section>
-
-      <section class="lineup-panel" id="lineupPanel">
-        <div class="section-header">
-          <div>
-            <span class="section-kicker">Line-up</span>
-            <h3>Takım Kadron</h3>
-          </div>
-
-          <span class="lineup-count">0 / 16</span>
-        </div>
-
-        <div class="formation-row">
-          <button class="formation-chip active" type="button" data-formation="4-4-2">4-4-2</button>
-          <button class="formation-chip" type="button" data-formation="3-5-2">3-5-2</button>
-          <button class="formation-chip" type="button" data-formation="4-3-3">4-3-3</button>
-        </div>
-
-        <div class="pitch" id="pitch">
-          <div class="pitch-markings">
-            <span class="line halfway"></span>
-            <span class="circle center-circle"></span>
-            <span class="box top-box"></span>
-            <span class="box bottom-box"></span>
-            <span class="small-box top-small-box"></span>
-            <span class="small-box bottom-small-box"></span>
-          </div>
-
-          <div class="pitch-slots" id="pitchSlots"></div>
-        </div>
-
-        <section class="bench-panel">
-          <div class="bench-header">
-            <div>
-              <span class="section-kicker">Bench</span>
-              <h4>Yedek Kulübesi</h4>
-            </div>
-
-            <span id="benchCount">0 / 5</span>
-          </div>
-
-          <div class="bench-slots" id="benchSlots"></div>
         </section>
 
-        <p class="lineup-warning">
-          Minimum 6 oyuncu seçmeden maç puanı kazanamazsın.
-        </p>
-      </section>
-
-      <section class="market-panel">
-        <div class="section-header">
-          <div>
-            <span class="section-kicker">Player Market</span>
-            <h3>Öne Çıkan Oyuncular</h3>
+        <section class="cash-vault-card">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="cashVault">Ana Kasa</span>
+              <h3 data-i18n="investmentBonus">Yatırım Bonusu</h3>
+            </div>
+            <span class="cash-vault-badge" data-i18n="demo">Demo</span>
           </div>
 
-          <button class="text-button" type="button">Tümünü Gör</button>
-        </div>
-
-        <div class="player-list">
-          <article class="player-card">
-            <div class="player-flag flag-france" aria-label="France flag">
-              <span></span><span></span><span></span>
-            </div>
-
-            <div class="player-info">
-              <strong>Kylian M.</strong>
-              <span>France • FWD • Rating 9.1</span>
-            </div>
-
-            <div class="player-price">
-              <strong>$91K</strong>
-              <button type="button">Al</button>
-            </div>
-          </article>
-
-          <article class="player-card">
-            <div class="player-flag flag-england" aria-label="England flag">
-              <span></span><span></span>
-            </div>
-
-            <div class="player-info">
-              <strong>Jude B.</strong>
-              <span>England • MID • Rating 8.8</span>
-            </div>
-
-            <div class="player-price">
-              <strong>$88K</strong>
-              <button type="button">Al</button>
-            </div>
-          </article>
-
-          <article class="player-card">
-            <div class="player-flag flag-brazil" aria-label="Brazil flag">
-              <span></span>
-            </div>
-
-            <div class="player-info">
-              <strong>Alisson B.</strong>
-              <span>Brazil • GK • Rating 8.4</span>
-            </div>
-
-            <div class="player-price">
-              <strong>$84K</strong>
-              <button type="button">Al</button>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="info-panel">
-        <div class="section-header">
-          <div>
-            <span class="section-kicker">Market</span>
-            <h3>Transfer Window</h3>
+          <div class="cash-vault-balance">
+            <span data-i18n="virtualBalance">Sanal Bakiye</span>
+            <strong id="cashVaultBalance">$1,000,000</strong>
           </div>
 
-          <span class="live-badge">Açık</span>
-        </div>
-
-        <p>
-          Günün ilk maçı başlamadan önce transfer yapabilirsin.
-          İlk maç başladıktan sonra transfer kilitlenir.
-        </p>
-      </section>
-
-      <section class="info-panel">
-        <div class="section-header">
-          <div>
-            <span class="section-kicker">Leaderboard</span>
-            <h3>Sıralama</h3>
+          <div class="cash-vault-stats">
+            <div class="cash-vault-stat">
+              <span data-i18n="totalInvested">Toplam Yatırım</span>
+              <strong id="cashVaultInvested">Henüz yatırım yapılmadı</strong>
+            </div>
+            <div class="cash-vault-stat">
+              <span data-i18n="bonusPointsLabel">Bonus Puan</span>
+              <strong id="cashVaultBonusPts">—</strong>
+            </div>
           </div>
 
-          <span class="rank-badge">#---</span>
-        </div>
+          <div class="cash-vault-rules">
+            <article class="cash-vault-rule">
+              <span data-i18n="vault100kRule">100K Sanal</span>
+              <strong data-i18n="vault100kReward">+100 Puan</strong>
+            </article>
+            <article class="cash-vault-rule">
+              <span data-i18n="vault500kRule">500K Sanal</span>
+              <strong data-i18n="vault500kReward">+500 Puan</strong>
+            </article>
+          </div>
 
-        <p>
-          Maç sonu oyuncu ratingleri toplam puanına eklenir.
-          8.5+ rating alan kaybeden takım oyuncuları boost kazanır.
-        </p>
+          <div class="cash-vault-actions">
+            <button
+              type="button"
+              class="cash-vault-button"
+              data-investment-amount="100000"
+              data-i18n="invest100k"
+            >+100K Sanal Yatırım</button>
+            <button
+              type="button"
+              class="cash-vault-button secondary"
+              data-investment-amount="500000"
+              data-i18n="invest500k"
+            >+500K Sanal Yatırım</button>
+          </div>
+
+          <p class="cash-vault-note" data-i18n="vaultNote">
+            Demo özellik — gerçek ödeme, cüzdan veya para yatırma işlemi içermez.
+          </p>
+        </section>
+
+        <section class="challenge-card">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="todayChallenge">Today Challenge</span>
+              <h3 data-i18n="worldCupChallenge">Dünya Kupası Fantasy Challenge</h3>
+            </div>
+            <button class="text-button rules-button" type="button" id="openRulesButton" data-i18n="rules">Kurallar</button>
+          </div>
+
+          <div class="challenge-metrics">
+            <article class="challenge-metric">
+              <span data-i18n="minimum">Minimum</span>
+              <strong data-i18n="players6">6 Oyuncu</strong>
+            </article>
+            <article class="challenge-metric">
+              <span data-i18n="target">Hedef</span>
+              <strong data-i18n="targetPoints">50,000 Puan</strong>
+            </article>
+            <article class="challenge-metric" id="challengeTransferMetric">
+              <span data-i18n="status">Durum</span>
+              <strong data-transfer-status-text>Transfer Açık</strong>
+            </article>
+          </div>
+
+          <button class="secondary-button" type="button" data-view-target="lineup" data-i18n="lineupGo">
+            Line-up'a Git
+          </button>
+        </section>
+
+        <section class="how-it-works-card">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="howItWorks">How It Works</span>
+              <h3 data-i18n="howSteps">4 Adımda Oyna</h3>
+            </div>
+          </div>
+
+          <div class="how-steps">
+            <article class="how-step">
+              <span class="how-step-number">1</span>
+              <div class="how-step-body">
+                <strong data-i18n="step1Title">Oyuncu Seç</strong>
+                <p data-i18n="step1Desc">Sanal bütçenle yıldızları kadrona ekle.</p>
+              </div>
+            </article>
+
+            <article class="how-step">
+              <span class="how-step-number">2</span>
+              <div class="how-step-body">
+                <strong data-i18n="step2Title">Kadroyu Kur</strong>
+                <p data-i18n="step2Desc">İlk 11 ve 5 yedek slotunu doldur.</p>
+              </div>
+            </article>
+
+            <article class="how-step">
+              <span class="how-step-number">3</span>
+              <div class="how-step-body">
+                <strong data-i18n="step3Title">Maçı Oynat</strong>
+                <p data-i18n="step3Desc">Minimum 6 oyuncuyla demo simülasyonu başlat.</p>
+              </div>
+            </article>
+
+            <article class="how-step">
+              <span class="how-step-number">4</span>
+              <div class="how-step-body">
+                <strong data-i18n="step4Title">Sıralamada Yüksel</strong>
+                <p data-i18n="step4Desc">Rating puanların leaderboard'a yansır.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="info-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="market">Market</span>
+              <h3 data-i18n="transferWindow">Transfer Window</h3>
+            </div>
+
+            <span class="live-badge" data-transfer-status-badge>Açık</span>
+          </div>
+
+          <p data-transfer-copy>
+            Günün ilk maçı başlamadan önce transfer yapabilirsin.
+            İlk maç başladıktan sonra transfer kilitlenir.
+          </p>
+        </section>
+
+        <section class="info-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="leaderboard">Leaderboard</span>
+              <h3 data-i18n="ranking">Sıralama</h3>
+            </div>
+
+            <span class="rank-badge">#---</span>
+          </div>
+
+          <p data-i18n="leaderboardInfo">
+            Maç sonu oyuncu ratingleri toplam puanına eklenir.
+            8.5+ rating alan kaybeden takım oyuncuları boost kazanır.
+          </p>
+        </section>
+
       </section>
 
-      <section class="game-note">
-        <strong>Demo Notu:</strong>
-        Bu MVP ekranı görsel ve prototip amaçlıdır. Gerçek para, ödeme veya bahis altyapısı içermez.
+      <section class="view view-lineup" data-view="lineup">
+        <p class="action-feedback view-feedback" data-feedback></p>
+
+        <div class="lineup-desktop-grid">
+
+        <div class="lineup-side-top">
+
+        <section class="quick-stats">
+          <article class="stat-card">
+            <span data-i18n="squad">Kadro</span>
+            <strong id="squadCount">0 / 16</strong>
+          </article>
+
+          <article class="stat-card">
+            <span data-i18n="squadPower">Kadro Gücü</span>
+            <strong id="squadPowerPoints">0</strong>
+          </article>
+
+          <article class="stat-card">
+            <span data-i18n="transfer">Transfer</span>
+            <strong id="transferStatus">Açık</strong>
+          </article>
+
+          <article class="stat-card">
+            <span data-i18n="matchPoints">Maç Puanı</span>
+            <strong id="totalPoints">0</strong>
+          </article>
+        </section>
+
+        <section class="squad-progress-card">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="squadProgress">Squad Progress</span>
+              <h3 data-i18n="squadCompletion">Kadro Tamamlama</h3>
+            </div>
+            <span class="lineup-count" id="squadProgressCount">0 / 16</span>
+          </div>
+
+          <div
+            class="squad-progress-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="16"
+            aria-valuenow="0"
+            id="squadProgressTrack"
+          >
+            <span class="squad-progress-fill" id="squadProgressFill"></span>
+          </div>
+
+          <p class="squad-progress-copy" id="squadProgressCopy">
+            Maç için en az 6 oyuncu gerekli.
+          </p>
+
+          <div class="squad-milestones">
+            <span data-milestone="6" data-i18n="progressMin">6 Min</span>
+            <span data-milestone="11" data-i18n="progressXI">11 XI</span>
+            <span data-milestone="16" data-i18n="progressFull">16 Full</span>
+          </div>
+        </section>
+
+        <div class="squad-action-row">
+          <button class="auto-squad-button" type="button" id="autoSquadButton" data-i18n="autoBuild">
+            Otomatik Kadro Kur
+          </button>
+          <button class="reset-squad-button" type="button" id="resetSquadButton" data-i18n="resetSquad">
+            Kadroyu Sıfırla
+          </button>
+        </div>
+
+        </div><!-- /.lineup-side-top -->
+
+        <div class="lineup-main-column">
+
+        <section class="lineup-panel" id="lineupPanel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="lineupHeader">Line-up</span>
+              <h3 data-i18n="teamSquad">Takım Kadron</h3>
+            </div>
+
+            <span class="lineup-count">0 / 16</span>
+          </div>
+
+          <div class="formation-row">
+            <button class="formation-chip active" type="button" data-formation="4-4-2">4-4-2</button>
+            <button class="formation-chip" type="button" data-formation="3-5-2">3-5-2</button>
+            <button class="formation-chip" type="button" data-formation="4-3-3">4-3-3</button>
+          </div>
+
+          <div class="pitch" id="pitch">
+            <div class="pitch-markings">
+              <span class="line halfway"></span>
+              <span class="circle center-circle"></span>
+              <span class="box top-box"></span>
+              <span class="box bottom-box"></span>
+              <span class="small-box top-small-box"></span>
+              <span class="small-box bottom-small-box"></span>
+            </div>
+
+            <div class="pitch-slots" id="pitchSlots"></div>
+          </div>
+
+          <section class="bench-panel">
+            <div class="bench-header">
+              <div>
+                <span class="section-kicker" data-i18n="bench">Bench</span>
+                <h4 data-i18n="benchSubstitutes">Yedek Kulübesi</h4>
+              </div>
+
+              <span id="benchCount">0 / 5</span>
+            </div>
+
+            <div class="bench-slots" id="benchSlots"></div>
+          </section>
+
+          <p class="lineup-warning" data-i18n="lineupWarning">
+            Minimum 6 oyuncu seçmeden maç puanı kazanamazsın.
+          </p>
+        </section>
+
+        </div><!-- /.lineup-main-column -->
+
+        <div class="lineup-side-bottom">
+
+        <section class="match-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="matchSimulation">Match Simulation</span>
+              <h3 data-i18n="earnPoints">Puan Kazan</h3>
+            </div>
+            <span class="live-badge" id="matchStatus" data-i18n="matchStatusReady">Hazır</span>
+          </div>
+
+          <p class="match-copy" data-i18n="matchCopyReady">
+            Minimum 6 oyuncu seç. Demo maç sonucu rating ortalaman, kadro büyüklüğün ve bonus kurallarına göre hesaplanır.
+          </p>
+
+          <div class="match-rules">
+            <div>
+              <span data-i18n="minimum">Minimum</span>
+              <strong data-i18n="players6">6 Oyuncu</strong>
+            </div>
+            <div>
+              <span data-i18n="bonusAvg">Puan</span>
+              <strong data-i18n="bonusAvgValue">Rating</strong>
+            </div>
+            <div>
+              <span data-i18n="boosterRule">Booster</span>
+              <strong data-i18n="boosterRuleValue">8.5+</strong>
+            </div>
+          </div>
+
+          <div class="match-ready-banner" id="matchReadyBanner" aria-live="polite">
+            <span class="ready-pulse"></span>
+            <div>
+              <strong data-i18n="squadReadyTitle">Kadron Hazır</strong>
+              <p data-i18n="squadReadyDesc">Demo maç simülasyonunu başlat ve leaderboard'da yüksel.</p>
+            </div>
+          </div>
+
+          <button class="primary-button match-button" type="button" id="playMatchButton" data-i18n="playDemoMatch">
+            Demo Maçı Oynat
+          </button>
+
+          <div class="match-result" id="matchResult" hidden aria-live="polite"></div>
+
+          <p class="match-disclaimer" data-i18n="matchDisclaimer">
+            Demo simülasyon sonucu rastgele bonus içerir. Gerçek bahis, ödeme veya para ödülü yoktur.
+          </p>
+        </section>
+
+        <section class="scout-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="scout">Scout</span>
+              <h3 data-i18n="featuredPlayers">Öne Çıkan Oyuncular</h3>
+            </div>
+          </div>
+
+          <p class="scout-copy" data-i18n="scoutCopy">
+            Kadro kurmak için saha üzerindeki pozisyonlara dokun.
+            Otomatik kurmak için yukarıdaki butonu kullan.
+          </p>
+
+          <div class="scout-list" data-scout-list="featured"></div>
+        </section>
+
+        </div><!-- /.lineup-side-bottom -->
+
+        </div><!-- /.lineup-desktop-grid -->
+
+      </section>
+
+
+      <section class="view view-board" data-view="board">
+        <p class="action-feedback view-feedback" data-feedback></p>
+
+        <div class="board-left-col">
+
+        <section class="board-hero-panel" aria-live="polite">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="tournament">Tournament</span>
+              <h3 data-i18n="worldCupLeague">Dünya Kupası Ligi</h3>
+            </div>
+
+            <span class="rank-badge" id="boardRankBadge">#---</span>
+          </div>
+
+          <p class="board-hero-copy" id="boardHeroCopy">
+            Demo turnuva sıralaması. Maç simülasyonu sonrası yerin ve puanın güncellenir.
+          </p>
+
+          <div class="board-hero-grid">
+            <article class="board-metric">
+              <span data-i18n="totalPointsBoardLabel">Toplam Puan</span>
+              <strong id="boardTotalPoints">0</strong>
+            </article>
+            <article class="board-metric">
+              <span data-i18n="rankChangeShort">Son Rank Değişimi</span>
+              <strong id="boardRankChange">—</strong>
+            </article>
+            <article class="board-metric">
+              <span data-i18n="avgRating">Ortalama Rating</span>
+              <strong id="boardAvgRating">—</strong>
+            </article>
+          </div>
+
+          <div class="board-breakdown-section">
+            <span class="section-kicker" data-i18n="pointBreakdown">Puan Breakdown</span>
+            <div class="board-breakdown-grid" id="boardBreakdown"></div>
+          </div>
+        </section>
+
+        <section class="history-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="matchHistory">Match History</span>
+              <h3 data-i18n="lastResults">Son Sonuçlar</h3>
+            </div>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </section>
+
+        </div><!-- /.board-left-col -->
+
+        <div class="board-right-col">
+
+        <section class="podium-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="podium">Podium</span>
+              <h3 data-i18n="top3">İlk 3 Takım</h3>
+            </div>
+          </div>
+          <div class="podium-grid" id="podiumGrid"></div>
+        </section>
+
+        <section class="leaderboard-panel">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="leaderboard">Leaderboard</span>
+              <h3 data-i18n="tournamentRanking">Turnuva Sıralaması</h3>
+            </div>
+          </div>
+          <div class="leaderboard-list" id="leaderboardList"></div>
+        </section>
+
+        </div><!-- /.board-right-col -->
+
       </section>
 
     </main>
 
     <nav class="bottom-nav">
-      <button class="nav-item active" type="button">
-        <span></span>
-        Home
+      <button class="nav-item active" type="button" data-view-target="home">
+        <span class="nav-icon"></span>
+        <span data-i18n="home">Home</span>
       </button>
 
-      <button class="nav-item" type="button">
-        <span></span>
-        Line-up
+      <button class="nav-item" type="button" data-view-target="lineup">
+        <span class="nav-icon"></span>
+        <span data-i18n="lineup">Line-up</span>
       </button>
 
-      <button class="nav-item" type="button">
-        <span></span>
-        Market
-      </button>
-
-      <button class="nav-item" type="button">
-        <span></span>
-        Board
+      <button class="nav-item" type="button" data-view-target="board">
+        <span class="nav-icon"></span>
+        <span data-i18n="board">Board</span>
       </button>
     </nav>
 
@@ -272,26 +540,180 @@
     >
       <div class="picker-header">
         <div>
-          <span class="section-kicker" id="pickerModeLabel">Position Pick</span>
-          <h3 id="pickerTitle">Oyuncu Seç</h3>
+          <span class="section-kicker" id="pickerModeLabel" data-i18n="positionPick">Position Pick</span>
+          <h3 id="pickerTitle" data-i18n="selectPlayer">Oyuncu Seç</h3>
         </div>
 
-        <button class="text-button picker-close" type="button" id="closePickerButton">
+        <button class="text-button picker-close" type="button" id="closePickerButton" data-i18n="close">
           Kapat
         </button>
       </div>
 
       <div class="picker-info-row" id="pickerInfo">
-        <span id="pickerPosition">Pozisyon</span>
+        <span id="pickerPosition" data-i18n="position">Pozisyon</span>
         <span id="pickerBalance">$1,000,000</span>
-        <span id="pickerNote">Tekrar seçim yapılamaz</span>
+        <span id="pickerNote" data-i18n="cannotReselect">Tekrar seçim yapılamaz</span>
       </div>
 
       <div class="picker-list" id="pickerList"></div>
 
-      <p class="picker-footer">Demo fantasy MVP • Gerçek para içermez</p>
+      <p class="picker-footer" data-i18n="pickerFooter">Demo fantasy MVP • Gerçek para içermez</p>
     </div>
   </section>
+
+  <section class="reset-modal" id="resetModal" aria-hidden="true">
+    <div class="reset-backdrop" data-close-reset></div>
+    <div
+      class="reset-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="resetTitle"
+    >
+      <div class="reset-header">
+        <h3 id="resetTitle" data-i18n="resetTitle">Kadroyu Sıfırla?</h3>
+        <p class="reset-description" data-i18n="resetDescription">
+          Tüm oyuncular kaldırılır, bakiye $1,000,000 olur ve maç sonucu temizlenir.
+        </p>
+      </div>
+
+      <div class="reset-actions">
+        <button class="reset-button is-neutral" type="button" id="closeResetButton" data-i18n="cancel">
+          Vazgeç
+        </button>
+        <button class="reset-button is-danger" type="button" id="confirmResetButton" data-i18n="confirmReset">
+          Sıfırla
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="rules-modal" id="rulesModal" aria-hidden="true">
+    <div class="rules-backdrop" data-close-rules></div>
+    <div
+      class="rules-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rulesTitle"
+    >
+      <div class="rules-header">
+        <div>
+          <span class="section-kicker">Rules</span>
+          <h3 id="rulesTitle" data-i18n="rulesTitle">XI Royale Nasıl Oynanır?</h3>
+        </div>
+        <button class="modal-close-button" type="button" data-close-rules data-i18n="close">Kapat</button>
+      </div>
+
+      <div class="rules-list">
+        <article class="rules-item">
+          <span class="rules-item-number">1</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule1Title">Sanal Bütçe</strong>
+            <p data-i18n="rule1Desc">$1,000,000 sanal bakiye ile başlarsın. Gerçek para içermez.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">2</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule2Title">Kadro</strong>
+            <p data-i18n="rule2Desc">11 saha oyuncusu + 5 yedek ile 16 kişilik kadro hedeflenir.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">3</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule3Title">Minimum Oyuncu</strong>
+            <p data-i18n="rule3Desc">Demo maç oynatmak için en az 6 oyuncu seçmelisin.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">4</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule4Title">Kadro Gücü</strong>
+            <p data-i18n="rule4Desc">Oyuncu ratingleri rating × 10 mantığıyla kadro gücüne eklenir.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">5</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule5Title">Maç Puanı</strong>
+            <p data-i18n="rule5Desc">Demo maç simülasyonu kadro gücü, ortalama rating, kadro bonusu ve rastgele demo bonus ile hesaplanır.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">6</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule6Title">Rating Booster</strong>
+            <p data-i18n="rule6Desc">Demo simülasyonda 8.5+ performans rating alan ve kaybeden takımda sayılan oyuncular +15 boost kazanabilir.</p>
+          </div>
+        </article>
+
+        <article class="rules-item">
+          <span class="rules-item-number">7</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule7Title">Transfer Kilidi</strong>
+            <p data-i18n="rule7Desc">Demo maç oynandıktan sonra transfer dönemi kapanır. Yeni kadro için Kadroyu Sıfırla kullanılır.</p>
+          </div>
+        </article>
+
+        <article class="rules-item is-disclaimer">
+          <span class="rules-item-number">8</span>
+          <div class="rules-item-body">
+            <strong data-i18n="rule8Title">Demo Uyarısı</strong>
+            <p data-i18n="rule8Desc">Bu MVP gerçek bahis, ödeme, cüzdan veya para ödülü içermez.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bonus-wheel-modal" id="bonusWheelModal" aria-hidden="true">
+    <div class="bonus-wheel-backdrop" data-close-wheel></div>
+
+    <div
+      class="bonus-wheel-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bonusWheelTitle"
+    >
+      <div class="bonus-wheel-sheet-header">
+        <div>
+          <span class="section-kicker" data-i18n="bonusWheelKicker">Bonus Wheel</span>
+          <h3 id="bonusWheelTitle" data-i18n="bonusWheelTitle">İlk 3 Bonusu Açıldı</h3>
+        </div>
+
+        <button
+          class="modal-close-button"
+          type="button"
+          data-close-wheel
+          data-i18n="close"
+          data-i18n-aria="bonusWheelCloseAria"
+          aria-label="Bonus çarkı penceresini kapat"
+        >Kapat</button>
+      </div>
+
+      <div id="bonusWheelContent"></div>
+    </div>
+  </section>
+
+  <section class="match-result-modal" id="matchResultModal" aria-hidden="true">
+    <div class="match-result-backdrop" data-close-match-result></div>
+    <div
+      class="match-result-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="matchResultHeading"
+    >
+      <div id="matchResultContent"></div>
+    </div>
+  </section>
+
+  <!-- Global toast — tüm sayfalarda ortak, fixed konumda -->
+  <div class="toast-notification" id="globalToast" data-feedback aria-live="polite" aria-atomic="true"></div>
 
   <script src="js/app.js"></script>
 </body>
